@@ -3,7 +3,7 @@ from .models import ProductUploader, Product
 
 
 class ProductUploaderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'status', 'created_by', 'created_date', 'link', 'completed_at',)
+    list_display = ('id', 'status', 'created_by', 'created_date', 'link', 'started_at', 'completed_at',)
     readonly_fields = ('status',)
     fields = ('link', 'status',)
 

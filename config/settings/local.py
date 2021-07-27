@@ -12,13 +12,13 @@ from .base import *  # noqa
 
 # DEBUG
 # ------------------------------------------------------------------------------
-DEBUG = False
-# TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
+DEBUG = True
+TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 
 # django-debug-toolbar
 # ------------------------------------------------------------------------------
-# MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
-# INSTALLED_APPS += ['debug_toolbar', ]
+MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
+INSTALLED_APPS += ['debug_toolbar', ]
 
 # SECRET CONFIGURATION
 # ------------------------------------------------------------------------------
