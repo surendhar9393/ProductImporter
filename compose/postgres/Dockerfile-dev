@@ -1,0 +1,10 @@
+FROM postgis/postgis:12-master
+
+# initialisation scripts
+COPY ./compose/postgres/create-user.sh /docker-entrypoint-initdb.d/10-create-user.sh
+RUN sed -i 's/\r//' /docker-entrypoint-initdb.d/10-create-user.sh \
+      && chmod +x /docker-entrypoint-initdb.d/10-create-user.sh
+
+COPY ./compose/postgres/create-db.sh /docker-entrypoint-initdb.d/20-create-db.sh
+RUN sed -i 's/\r//' /docker-entrypoint-initdb.d/20-create-db.sh \
+      && chmod +x /docker-entrypoint-initdb.d/20-create-db.sh

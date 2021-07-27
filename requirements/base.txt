@@ -1,0 +1,104 @@
+
+wheel==0.31.1
+
+# Bleeding edge Django
+django==3.0.0
+#django=">=2.1.1,<3.0.0"
+
+django-environ==0.4.5
+
+django_phonenumbers==1.0.1
+
+django-postgres-copy==2.4.2
+
+# Models
+django-model-utils==3.1.2
+
+# Password storage
+argon2-cffi==18.1.0
+
+# For user registration, either via email or social
+# Well-built with regular release cycles!
+django-allauth
+
+# Python-PostgreSQL Database Adapter
+psycopg2-binary==2.8.6
+
+
+# Time zones support
+#pytz==2018.4
+
+# Redis support
+django-redis==4.9.0
+redis==2.10.6
+
+django-compressor==2.2
+pycountry==18.5.26
+
+#OTP
+django-two-factor-auth==1.13
+
+#API Support
+djangorestframework==3.12.4
+djangorestframework-jwt==1.11.0
+
+#Celery
+celery==5.0.5
+django-celery-results==2.0.0
+#celery==4.2.0
+#django-celery-results==1.0.1
+kombu==5.0.2
+
+whitenoise==3.3.1
+
+
+#Slug
+django-autoslug==1.9.3
+
+#Import export
+django-import-export==1.1.0
+
+#Jet
+django-jet==1.0.8
+
+#python-jwt to generate tokens
+python_jwt==3.1.0
+
+#Accessing resources protected by OAuth 2.0.
+oauth2client==4.1.2
+
+
+#python-firebase
+python-firebase==1.2
+
+#Celery Beat
+#django-celery-beat==1.1.1
+django-celery-beat==2.1.0
+
+#Audit Log
+#django-audit-log==0.7.0
+
+#Date Range filter
+django-admin-rangefilter==0.3.9
+
+# SQL explorer
+#django-sql-explorer==1.1.2
+xlsxwriter==1.0.5
+
+#num2words
+num2words==0.5.7
+
+# Rest Condition for complex permissions
+rest_condition==1.0.3
+
+# Package for importing and exporting data
+openpyxl==2.5.3
+
+
+#Django FSM for states
+django-fsm==2.7.1
+#django-fsm-log==1.3.0
+django-fsm-admin==1.2.4
+
+pandas==1.1.5
+

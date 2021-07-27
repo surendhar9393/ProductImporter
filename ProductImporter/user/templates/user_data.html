@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block body_block %}
+<div class="container">
+  <div class="jumbotron">
+    Welcome to Finin.. !
+    {% if user.is_authenticated %}
+        <h2>Hello {{ user.user_name }}</h2>
+      {{user_data}}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
