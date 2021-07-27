@@ -44,12 +44,14 @@ def import_product(uploader_id):
             sku_names_ = [], batch_count = 0
             db.reset_queries()
 
-    print("1e---")
+    print("1e--1-")
     product_list = []
     count = 0
     batch_count = 0
+    total_rec = len(data.index)
     for row in data.itertuples():
         count += 1
+        batch_count += 1
         product_list.append(Product(
             batch=uploader, name=row[1],
             sku=row[2], description=row[3],
