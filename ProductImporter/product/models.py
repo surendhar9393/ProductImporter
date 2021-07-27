@@ -28,6 +28,9 @@ class ProductUploader(models.Model):
 
     completed_at = models.DateTimeField(null=True, blank=True)
 
+    def __str__(self):
+        return str(self.id)
+
 
 class Product(models.Model):
 
@@ -37,7 +40,7 @@ class Product(models.Model):
 
     name = models.CharField(_('Name'), max_length=100)
 
-    sku = models.CharField(_('Name'), max_length=100, unique=True)
+    sku = models.CharField(_('Sku'), max_length=100, unique=True)
 
     is_active = models.BooleanField(_('Is Active'), default=True)
 

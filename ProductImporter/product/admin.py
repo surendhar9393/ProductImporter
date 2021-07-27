@@ -19,6 +19,8 @@ admin.site.register(ProductUploader, ProductUploaderAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
     fields = ('name',)
+    search_fields = ("sku",)
+    list_filter = ('is_active',)
     list_display = ('id', 'name', 'sku', 'is_active', 'description', 'batch', 'created_date',)
 
 

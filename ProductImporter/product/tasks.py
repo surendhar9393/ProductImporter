@@ -21,30 +21,34 @@ def import_product(uploader_id):
     data = pd.read_csv(url)
     data.drop_duplicates(subset="sku", keep='last', inplace=True)
     sku_names = data['sku'].unique().tolist()
-
     records = Product.objects.filter(sku__in=sku_names).order_by(
-        'id').only('name', 'description')#[i*MAX_RECORD_TO_PROCESS_IN_ONE_RUN:(i+1)*MAX_RECORD_TO_PROCESS_IN_ONE_RUN]
-    print("reco00000000000")
+        'id').only('name', 'description')
     total_rec = records.count()
+
+    # update existsing records
     sku_names_ = []
     batch_count = 0
     count = 0
+    update_list = []
     for record in records.iterator():
         count += 1
         batch_count += 1
         sku_names_.append(record.sku)
-        # loop to update the existing records
-        # writing to DB using bulk update method
-        record.name = data.loc[data['sku'] == record.sku, 'name']
-        record.description = data.loc[data['sku'] == record.sku, 'description']
-        if batch_count == MAX_RECORD_TO_PROCESS_IN_ONE_BATCH or count == total_rec:
-            print("1e--")
-            data = data[~(data.sku.isin(sku_names_))]
-            Product.objects.bulk_update(records, ['name', 'description'])
-            sku_names_ = [], batch_count = 0
-            db.reset_queries()
+        update_list.append(Product(
+            id=record.id,
+            name=data.loc[data['sku'] == record.sku, 'name'],
+            sku=data.loc[data['sku'] == record.sku, 'description']
+        ))
 
-    print("1e--1-")
+        if batch_count == MAX_RECORD_TO_PROCESS_IN_ONE_BATCH or count == total_rec:
+            # exclude the updated record from dataframe
+            data = data[~(data.sku.isin(sku_names_))]
+            Product.objects.bulk_update(update_list, ['name', 'description'])
+            db.reset_queries()
+            update_list = []
+            batch_count = 0
+
+    # create new records
     product_list = []
     count = 0
     batch_count = 0
@@ -57,6 +61,7 @@ def import_product(uploader_id):
             sku=row[2], description=row[3],
             is_active=True
         ))
+
         if batch_count == MAX_RECORD_TO_PROCESS_IN_ONE_BATCH or count == total_rec:
             Product.objects.bulk_create(product_list)
             product_list = []
@@ -64,7 +69,6 @@ def import_product(uploader_id):
             db.reset_queries()
 
     db.reset_queries()
-    print("3---------")
     uploader.status = COMPLETED
     uploader.completed_at = timezone.now()
     uploader.save()
