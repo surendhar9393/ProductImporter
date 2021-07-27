@@ -52,32 +52,15 @@ services:
     hostname: redis
 
 # RabbitMQ - queue
-#  rabbit:
-#    hostname: rabbit
-#    image: rabbitmq:3-management
-#    environment:
-#      - RABBITMQ_DEFAULT_USER=admin
-#      - RABBITMQ_DEFAULT_PASS=mypass
-#    ports:
-#      - "5672:5672"
-#      - "15672:15672"  # here, we can access rabbitmq management plugin
-
-# RabbitMQ for message queuing infrastructure
   rabbit:
-    restart: always
     hostname: rabbit
     image: rabbitmq:3-management
-    env_file: .env
+    environment:
+      - DEFAULT_USER=admin
+      - DEFAULT_PASS=mypass
     ports:
       - "5672:5672"
-      - "15672:15672"
-    labels:
-      container_group: rabbit
-    logging:
- #     driver: gelf
-      options:
- #       gelf-address: udp://18.221.137.53:12201
-        labels: container_group
+      - "15672:15672"  # here, we can access rabbitmq management plugin
 
 # Celery worker
   worker:
