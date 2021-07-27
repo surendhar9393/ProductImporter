@@ -26,22 +26,24 @@ def import_product(uploader_id):
     batches = int(total_rec/MAX_RECORD_TO_PROCESS_IN_ONE_RUN) + 1
     print("batch-", batches)
     for i in range(0, batches):
+        is_rec = False
         records = Product.objects.filter(sku__in=sku_names).order_by(
             'id').only('name', 'description')[i*MAX_RECORD_TO_PROCESS_IN_ONE_RUN:(i+1)*MAX_RECORD_TO_PROCESS_IN_ONE_RUN]
         print("reco00000000000")
         for record in records.iterator():
+            is_rec=True
             # loop to update the existing records
             # writing to DB using bulk update method
             record.name = data.loc[data['sku'] == record.sku, 'name']
             # sku_val_mapping.get(record.sku)[0]
-            sku_names.append(record.sku)
+            # sku_names.append(record.sku)
             record.description = data.loc[data['sku'] == record.sku, 'description']
 
 
         print("1d---")
-        if records:
+        if is_rec:
             print("1e--")
-            data = data[~(data.sku.isin([sku_names]))]
+            data = data[~(data.sku.isin(sku_names))]
             Product.objects.bulk_update(records, ['name', 'description'])
             print("1f--")
             # db.reset_queries()
