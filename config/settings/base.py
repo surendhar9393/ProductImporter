@@ -202,8 +202,9 @@ CELERY_BROKER_TRANSPORT_OPTIONS = {
     'interval_step': 0.5,
     'interval_max': 3,
 }
+
 CELERY_TASK_ROUTES = {
-    'ProductImporter.user.tasks.send_sms': {'queue': 'high'},
+    'ProductImporter.product.tasks.import_product': {'queue': 'high'},
 }
 ACTIVE_COUNTRY_CODE = '+91'
 

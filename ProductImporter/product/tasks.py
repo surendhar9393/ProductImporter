@@ -1,5 +1,6 @@
 from celery import Celery
 
+from ProductImporter.common.base_tasks import TransactionAwareTask
 from ProductImporter.product.models import ProductUploader, PENDING, Product, COMPLETED
 
 app = Celery()
@@ -11,8 +12,9 @@ from django import db
 MAX_RECORD_TO_PROCESS_IN_ONE_BATCH = 500
 
 
-@celery_app.task(max_retries=settings.CELERY_EVENT_MAX_RETRIES, ignore_result=False)
-def import_product(uploader_id):
+@celery_app.task(base=TransactionAwareTask, bind=True,
+             max_retries=settings.CELERY_EVENT_MAX_RETRIES, ignore_result=False)
+def import_product(self, uploader_id):
     uploader = ProductUploader.objects.filter(id=uploader_id, status=PENDING).first()
     if not uploader:
         return

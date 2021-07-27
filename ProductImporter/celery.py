@@ -24,8 +24,8 @@ if not broker_url:
         vhost=os.environ.get('RABBIT_ENV_VHOST', ''))
 
 
-celery_app = Celery('ProductImporter',broker=broker_url,
-             include=['ProductImporter.user.tasks'])
+celery_app = Celery('ProductImporter', broker=broker_url,
+             include=['ProductImporter.product.tasks'])
 
 celery_app.conf.update(
     CELERY_TASK_RESULT_EXPIRES=3600,

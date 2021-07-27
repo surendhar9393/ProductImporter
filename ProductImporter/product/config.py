@@ -5,5 +5,5 @@ class UserConfig(AppConfig):
     name = 'ProductImporter.product'
 
     def ready(self):
-        pass
+        import ProductImporter.product.signals
 
