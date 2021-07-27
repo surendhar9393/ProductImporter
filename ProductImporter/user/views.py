@@ -36,7 +36,7 @@ class Login(generics.CreateAPIView):
             }
             return Response(status=status.HTTP_400_BAD_REQUEST, data=resp)
         user = User.objects.do_login(
-            request=request, user_name=email, password=password)
+            request=request, email=email, password=password)
         if user:
             login(request, user)
             token = self.generate_auth_token(user)

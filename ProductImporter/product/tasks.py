@@ -19,7 +19,6 @@ def import_product(uploader_id):
     data = pd.read_csv(url)
     data.drop_duplicates(subset="sku", keep='last', inplace=True)
     sku_names = data['sku'].unique().tolist()
-    print("1b-")
     records = Product.objects.filter(sku__in=sku_names).only('name', 'description')
     print("1c---", records.count())
     total_rec = records.count()
@@ -30,8 +29,10 @@ def import_product(uploader_id):
         records = Product.objects.filter(sku__in=sku_names).order_by(
             'id').only('name', 'description')[i*MAX_RECORD_TO_PROCESS_IN_ONE_RUN:(i+1)*MAX_RECORD_TO_PROCESS_IN_ONE_RUN]
         print("reco00000000000")
+        sku_names = []
         for record in records.iterator():
-            is_rec=True
+            is_rec = True
+            sku_names.append(record.sku)
             # loop to update the existing records
             # writing to DB using bulk update method
             record.name = data.loc[data['sku'] == record.sku, 'name']
@@ -61,6 +62,7 @@ def import_product(uploader_id):
         if count >= MAX_RECORD_TO_PROCESS_IN_ONE_RUN:
             Product.objects.bulk_create(product_list)
             product_list = []
+            count = 0
             db.reset_queries()
 
     db.reset_queries()
