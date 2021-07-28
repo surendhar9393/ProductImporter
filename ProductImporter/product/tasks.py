@@ -9,7 +9,7 @@ from django.conf import settings
 import pandas as pd
 from django.utils import timezone
 from django import db
-MAX_RECORD_TO_PROCESS_IN_ONE_BATCH = 500
+MAX_RECORD_TO_PROCESS_IN_ONE_BATCH = 5000
 
 
 @celery_app.task(base=TransactionAwareTask, bind=True,
