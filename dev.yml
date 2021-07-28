@@ -56,8 +56,8 @@ services:
     hostname: rabbit
     image: rabbitmq:3-management
     environment:
-      - DEFAULT_USER=admin
-      - DEFAULT_PASS=mypass
+      - DEFAULT_USER=guest
+      - DEFAULT_PASS=guest
     ports:
       - "5672:5672"
       - "15672:15672"  # here, we can access rabbitmq management plugin
